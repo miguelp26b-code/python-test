@@ -1,6 +1,6 @@
 # Finanzas personales
 
-Gestor de finanzas personales en la línea de comandos, escrito en Python sin dependencias externas (solo la biblioteca estándar). Los datos se guardan en un fichero SQLite.
+Gestor de finanzas personales escrito en Python, con **app para Android** (Kivy) y **línea de comandos**. Ambas comparten la misma lógica y guardan los datos en SQLite.
 
 ## Funciones
 
@@ -9,11 +9,38 @@ Gestor de finanzas personales en la línea de comandos, escrito en Python sin de
 - Consultar el **saldo** total
 - **Resumen** mensual: ingresos, gastos, balance, tasa de ahorro y reparto de gastos por categoría
 - **Presupuestos** mensuales por categoría, con aviso al superarlos
-- **Exportar e importar** movimientos en CSV
+- **Exportar e importar** movimientos en CSV (línea de comandos)
+- **Recomendaciones** a partir de tus datos: presupuestos que vas a superar al ritmo actual, categorías que se disparan respecto a tu media, tasa de ahorro (regla 50/30/20) y fondo de emergencia. Son orientativas, no asesoramiento financiero.
 
 Los importes se guardan como céntimos enteros, así que no hay errores de redondeo.
 
-## Uso
+## App Android
+
+### Descargar el APK
+
+GitHub Actions compila el APK en cada push (workflow `Android APK`):
+
+1. En GitHub, ve a la pestaña **Actions** → **Android APK** → la ejecución más reciente.
+2. Descarga el artefacto **mis-finanzas-apk** (un `.zip` con el `.apk` dentro).
+3. Copia el `.apk` al móvil, ábrelo y permite "instalar apps de origen desconocido".
+
+Es un APK de depuración (firmado con clave de debug): sirve para instalarlo en tu móvil, no para publicarlo en Google Play.
+
+### Probar la app en el ordenador
+
+```bash
+pip install kivy
+python main.py
+```
+
+### Compilar el APK en local (Linux)
+
+```bash
+pip install buildozer cython==0.29.37
+buildozer android debug   # el APK queda en bin/
+```
+
+## Línea de comandos
 
 Requiere Python 3.10 o superior.
 

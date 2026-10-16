@@ -8,13 +8,9 @@ import sys
 from decimal import Decimal
 from pathlib import Path
 
-from .core import ErrorFinanzas, Finanzas
+from .core import ErrorFinanzas, Finanzas, dinero
 
 RUTA_POR_DEFECTO = Path.home() / ".finanzas.db"
-
-
-def dinero(valor: Decimal) -> str:
-    return f"{valor:,.2f} €".replace(",", "X").replace(".", ",").replace("X", ".")
 
 
 def barra(porcentaje: float, ancho: int = 20) -> str:

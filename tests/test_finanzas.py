@@ -83,6 +83,13 @@ class TestFinanzas(unittest.TestCase):
         self.f.quitar_presupuesto("ocio")
         self.assertEqual(len(self.f.estado_presupuestos("2026-10")), 1)
 
+    def test_categorias_por_frecuencia(self):
+        self.f.agregar("gasto", "1", "ocio")
+        self.f.agregar("gasto", "1", "comida")
+        self.f.agregar("gasto", "1", "comida")
+        self.f.agregar("ingreso", "1", "sueldo")
+        self.assertEqual(self.f.categorias("gasto"), ["comida", "ocio"])
+
     def test_csv_ida_y_vuelta(self):
         self.f.agregar("ingreso", "1000", "sueldo", "octubre", fecha="2026-10-01")
         self.f.agregar("gasto", "12.34", "comida", "súper, pan", fecha="2026-10-02")

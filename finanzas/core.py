@@ -94,6 +94,11 @@ def de_centimos(centimos: int) -> Decimal:
     return (Decimal(centimos) / 100).quantize(Decimal("0.01"))
 
 
+def dinero(valor: Decimal) -> str:
+    """Formato español: 1.234,56 €."""
+    return f"{valor:,.2f} €".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
 def parsear_fecha(texto: str | date | None) -> date:
     if texto is None:
         return date.today()
@@ -195,6 +200,15 @@ class Finanzas:
             )
             for f in filas
         ]
+
+    def categorias(self, tipo: str) -> list[str]:
+        """Categorías usadas para un tipo, de la más a la menos frecuente."""
+        filas = self.conexion.execute(
+            "SELECT categoria FROM movimientos WHERE tipo = ?"
+            " GROUP BY categoria ORDER BY COUNT(*) DESC, categoria",
+            (tipo,),
+        ).fetchall()
+        return [f["categoria"] for f in filas]
 
     def saldo(self) -> Decimal:
         (total,) = self.conexion.execute(
