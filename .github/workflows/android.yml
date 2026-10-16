@@ -17,6 +17,8 @@ jobs:
   apk:
     needs: tests
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -54,3 +56,15 @@ jobs:
           name: mis-finanzas-apk
           path: bin/*.apk
           if-no-files-found: error
+
+      - name: Publicar el APK como Release (enlace directo de descarga)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-${{ github.run_number }}
+          name: Mis Finanzas (build ${{ github.run_number }})
+          target_commitish: ${{ github.sha }}
+          make_latest: true
+          body: |
+            APK de la app Mis Finanzas. Descarga el archivo `.apk` en tu móvil Android,
+            ábrelo y permite "instalar apps de origen desconocido".
+          files: bin/*.apk
